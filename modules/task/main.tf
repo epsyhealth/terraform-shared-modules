@@ -24,7 +24,7 @@ resource "aws_ecs_task_definition" "task" {
   }])
 
   requires_compatibilities = ["FARGATE"]
-  network_mode             = var.network_mode
+  network_mode             = "awsvpc"
   cpu                      = var.cpu
   memory                   = var.memory
   tags                     = var.tags
