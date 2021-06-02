@@ -71,7 +71,4 @@ variable "task_role_arn" {
   type    = string
 }
 
-variable "network_mode" {
-  type    = string
-  default = "awsvpc"
-}
+
