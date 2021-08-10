@@ -1,11 +1,11 @@
 variable "ingress_cidr" {
   type    = list(any)
-  default = ["0.0.0.0/0"]
+  default = []
 }
 
 variable "egress_cidr" {
   type    = list(any)
-  default = ["0.0.0.0/0"]
+  default = []
 }
 
 variable "vpc_id" {
@@ -19,7 +19,7 @@ variable "ingress_rules" {
 
 variable "egress_rules" {
   type    = list(any)
-  default = ["all-all"] # By default we don't restrict any outbound connections
+  default = [] # Block everything by default - simple, effective and error proof.
 }
 
 variable "name" {
@@ -34,5 +34,20 @@ variable "description" {
 
 variable "ingress_with_cidr_blocks" {
   type    = list(any)
+  default = []
+}
+
+variable "tags" {
+  type    = map(any)
+  default = {}
+}
+
+variable "ingress_with_source_security_group_id" {
+  type    = list(map(string))
+  default = []
+}
+
+variable "egress_with_source_security_group_id" {
+  type    = list(map(string))
   default = []
 }
