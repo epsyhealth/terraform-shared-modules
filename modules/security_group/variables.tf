@@ -51,3 +51,8 @@ variable "egress_with_source_security_group_id" {
   type    = list(map(string))
   default = []
 }
+
+variable "egress_prefix_list_ids" {
+  type    = list(any)
+  default = []
+}
