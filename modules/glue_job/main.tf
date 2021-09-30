@@ -9,8 +9,8 @@ resource "aws_glue_job" "glue_job" {
   }
 
   default_arguments = {
-    "--job-language" = var.job-language
-    "--TempDir"      = var.TempDir
+    "--job-language" = var.job_language
+    "--TempDir"      = var.temp_dir
   }
 
   connections = var.connections

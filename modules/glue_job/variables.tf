@@ -20,11 +20,11 @@ variable "script_location" {
   type = string
 }
 
-variable "job-language" {
+variable "job_language" {
   type = string
 }
 
-variable "TempDir" {
+variable "temp_dir" {
   type = string
 }
 
