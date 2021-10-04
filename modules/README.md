@@ -38,7 +38,7 @@ module "glue_job" {
   script_location = "s3://my-s3-bucket-with-scripts/scripts/glue_job_${each.key}.py"
   temp_dir = "s3://my-s3-bucket-with-scripts/tmp"
   role_arn = module.glue_iam.role_arn
-  connections = [var.project_name]
+  connections = [local.name]
     schedule = "*/15 * * * *"
 }
 ```
