@@ -1,5 +1,5 @@
 resource "aws_glue_job" "glue_job" {
-  name         = var.name
+  name         = "${var.project_name}-${var.name}"
   role_arn     = var.role_arn
   glue_version = var.glue_version
 

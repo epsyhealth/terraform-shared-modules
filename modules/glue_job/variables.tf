@@ -1,6 +1,9 @@
+variable "project_name" {
+  type = string
+}
+
 variable "name" {
-  type    = string
-  default = "my glue job"
+  type = string
 }
 
 variable "role_arn" {
@@ -13,7 +16,8 @@ variable "glue_version" {
 }
 
 variable "python_version" {
-  type = string
+  type    = string
+  default = "3"
 }
 
 variable "script_location" {
@@ -21,7 +25,8 @@ variable "script_location" {
 }
 
 variable "job_language" {
-  type = string
+  type    = string
+  default = "python"
 }
 
 variable "temp_dir" {
