@@ -29,13 +29,16 @@ module "glue_job" {
   source = "./glue_job"
   
   for_each = {
-    aura-event = {
-      script_location = "./scripts.tpl"
+    aura_event = {
     }
   }
-  
-  project_name = local.name
+
+  project_name = var.project_name
   name = each.key
-  script_location = each.value.script_location
+  script_location = "s3://my-s3-bucket-with-scripts/scripts/glue_job_${each.key}.py"
+  temp_dir = "s3://my-s3-bucket-with-scripts/tmp"
+  role_arn = module.glue_iam.role_arn
+  connections = [var.project_name]
+    schedule = "*/15 * * * *"
 }
 ```
