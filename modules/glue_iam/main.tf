@@ -22,16 +22,16 @@ resource "aws_iam_role_policy_attachment" "glue_service" {
 }
 
 resource "aws_iam_role_policy" "glue_s3_policy" {
-  name   = "${var.name}-glue-policy"
-  role   = aws_iam_role.glue.id
+  name = "${var.name}-glue-policy"
+  role = aws_iam_role.glue.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
-        Action = "s3:*"
+        Effect   = "Allow"
+        Action   = "s3:*"
         Resource = var.s3_buckets
-        Sid = ""
+        Sid      = ""
       }
     ]
   })

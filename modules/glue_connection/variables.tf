@@ -10,7 +10,7 @@ variable "redshift" {
 }
 
 variable "connection_name" {
-  type = string
+  type    = string
   default = "redshift-general"
 }
 
