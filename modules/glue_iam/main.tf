@@ -30,7 +30,7 @@ resource "aws_iam_role_policy" "glue_s3_policy" {
       {
         Effect   = "Allow"
         Action   = "s3:*"
-        Resource = var.s3_buckets
+        Resource = formatlist("arn:aws:s3:::%s", var.s3_buckets)
         Sid      = ""
       }
     ]
