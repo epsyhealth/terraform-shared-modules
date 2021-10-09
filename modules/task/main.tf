@@ -42,7 +42,7 @@ resource "aws_cloudwatch_event_rule" "ecs_task_rule" {
 data "aws_subnet" "selected" {
   filter {
     name   = "tag:Type"
-    values = ["private"]
+    values = ["private-a"]
   }
 }
 
@@ -54,7 +54,7 @@ data "aws_security_groups" "selected" {
 }
 
 resource "aws_cloudwatch_event_target" "ecs_task_target" {
-  count     = var.schedule_expression ? 1 : 0
+  count     = tobool(var.schedule_expression) ? 1 : 0
   target_id = "${var.name}-target"
   arn       = aws_ecs_task_definition.task.arn
   rule      = aws_cloudwatch_event_rule.ecs_task_rule[count.index].name
