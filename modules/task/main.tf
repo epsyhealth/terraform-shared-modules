@@ -39,7 +39,7 @@ resource "aws_cloudwatch_event_rule" "ecs_task_rule" {
   schedule_expression = var.schedule_expression
 }
 
-data "aws_subnets" "selected" {
+data "aws_subnet" "selected" {
   filter {
     name   = "tag:Type"
     values = ["private"]
@@ -67,7 +67,7 @@ resource "aws_cloudwatch_event_target" "ecs_task_target" {
     platform_version    = "LATEST"
 
     network_configuration {
-      subnets          = data.aws_subnets.selected.ids
+      subnets          = [data.aws_subnet.selected.id]
       security_groups  = data.aws_security_groups.selected.ids
       assign_public_ip = false
     }
