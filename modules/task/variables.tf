@@ -72,6 +72,7 @@ variable "task_role_arn" {
 }
 
 variable "schedule_expression" {
-  type    = string
-  default = null
+  type        = string
+  default     = null
+  description = "Allows you to define scheduled expression that will run task."
 }

@@ -42,3 +42,8 @@ module "glue_job" {
     schedule = "*/15 * * * *"
 }
 ```
+
+## ECS
+
+### Task
+Allows you define ECS task.
