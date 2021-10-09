@@ -57,7 +57,7 @@ resource "aws_cloudwatch_event_target" "ecs_task_target" {
   count     = var.schedule_expression ? 1 : 0
   target_id = "${var.name}-target"
   arn       = aws_ecs_task_definition.task.arn
-  rule      = aws_cloudwatch_event_rule.ecs_task_rule.name
+  rule      = aws_cloudwatch_event_rule.ecs_task_rule[count.index].name
   role_arn  = var.task_role_arn
 
   ecs_target {
