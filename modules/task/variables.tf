@@ -71,4 +71,7 @@ variable "task_role_arn" {
   type = string
 }
 
-
+variable "schedule_expression" {
+  type    = string
+  default = null
+}

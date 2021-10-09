@@ -31,3 +31,49 @@ resource "aws_ecs_task_definition" "task" {
   execution_role_arn       = var.execution_role_arn
   task_role_arn            = var.task_role_arn
 }
+
+resource "aws_cloudwatch_event_rule" "ecs_task_rule" {
+  count               = var.schedule_expression ? 1 : 0
+  name                = "${var.name}-rule"
+  description         = "Runs ECS task"
+  schedule_expression = var.schedule_expression
+}
+
+data "aws_subnets" "selected" {
+  filter {
+    name   = "tag:Type"
+    values = ["private"]
+  }
+}
+
+data "aws_security_groups" "selected" {
+  filter {
+    name   = "tag:Name"
+    values = ["default"]
+  }
+}
+
+resource "aws_cloudwatch_event_target" "ecs_task_target" {
+  count     = var.schedule_expression ? 1 : 0
+  target_id = "${var.name}-target"
+  arn       = aws_ecs_task_definition.task.arn
+  rule      = aws_cloudwatch_event_rule.ecs_task_rule.name
+  role_arn  = var.task_role_arn
+
+  ecs_target {
+    task_count          = 1
+    task_definition_arn = aws_ecs_task_definition.task.arn
+    launch_type         = "FARGATE"
+    platform_version    = "LATEST"
+
+    network_configuration {
+      subnets          = data.aws_subnets.selected.ids
+      security_groups  = data.aws_security_groups.selected.ids
+      assign_public_ip = false
+    }
+  }
+
+  depends_on = [
+    aws_ecs_task_definition.task
+  ]
+}
