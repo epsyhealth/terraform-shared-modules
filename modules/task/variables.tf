@@ -76,3 +76,8 @@ variable "schedule_expression" {
   default     = null
   description = "Allows you to define scheduled expression that will run task."
 }
+
+variable "schedule_command" {
+  type        = list(string)
+  description = "List of attributes passed to task to be executed"
+}

@@ -73,6 +73,14 @@ resource "aws_cloudwatch_event_target" "ecs_task_target" {
     }
   }
 
+  input = jsonencode({
+    "containerOverrides": [
+      {
+        "command": var.schedule_command
+      }
+    ]
+  })
+
   depends_on = [
     aws_ecs_task_definition.task
   ]
