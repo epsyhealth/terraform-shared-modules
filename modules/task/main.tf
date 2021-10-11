@@ -1,27 +1,33 @@
 resource "aws_ecs_task_definition" "task" {
   family = var.name
 
-  container_definitions = jsonencode([{
-    cpu : var.cpu,
-    image : var.image,
-    memory : var.memory,
-    name : var.name,
-    mountPoints : [],
-    volumesFrom : [],
-    entryPoint : var.entrypoint,
-    command : var.command,
-    portMappings : [for port in var.ports : { containerPort : port.container, hostPort : port.host, protocol : port.proto }],
-    essential : true,
-    environment : var.environment,
-    logConfiguration : {
-      logDriver : "awslogs",
-      options : {
-        awslogs-group : var.awslogs_group,
-        awslogs-stream-prefix : var.name,
-        awslogs-region : var.awslogs_region
+  container_definitions = jsonencode([
+    {
+      cpu : var.cpu,
+      image : var.image,
+      memory : var.memory,
+      name : var.name,
+      mountPoints : [],
+      volumesFrom : [],
+      entryPoint : var.entrypoint,
+      command : var.command,
+      portMappings : [
+      for port in var.ports : {
+        containerPort : port.container, hostPort : port.host, protocol : port.proto
+      }
+      ],
+      essential : true,
+      environment : var.environment,
+      logConfiguration : {
+        logDriver : "awslogs",
+        options : {
+          awslogs-group : var.awslogs_group,
+          awslogs-stream-prefix : var.name,
+          awslogs-region : var.awslogs_region
+        }
       }
     }
-  }])
+  ])
 
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -32,11 +38,8 @@ resource "aws_ecs_task_definition" "task" {
   task_role_arn            = var.task_role_arn
 }
 
-resource "aws_cloudwatch_event_rule" "ecs_task_rule" {
-  count               = var.schedule_expression != null ? 1 : 0
-  name                = "${var.name}-rule"
-  description         = "Runs ECS task"
-  schedule_expression = var.schedule_expression
+data "aws_ecs_cluster" "main" {
+  cluster_name = "main"
 }
 
 data "aws_subnet" "selected" {
@@ -53,30 +56,21 @@ data "aws_security_groups" "selected" {
   }
 }
 
-resource "aws_cloudwatch_event_target" "ecs_task_target" {
-  count     = var.schedule_expression != null ? 1 : 0
-  target_id = "${var.name}-target"
-  arn       = aws_ecs_task_definition.task.arn
-  rule      = aws_cloudwatch_event_rule.ecs_task_rule[count.index].name
-  role_arn  = var.task_role_arn
-
-  ecs_target {
-    task_count          = 1
-    task_definition_arn = aws_ecs_task_definition.task.arn
-    launch_type         = "FARGATE"
-    platform_version    = "LATEST"
-
-    network_configuration {
-      subnets          = [data.aws_subnet.selected.id]
-      security_groups  = data.aws_security_groups.selected.ids
-      assign_public_ip = false
-    }
-  }
-
-  input = jsonencode({
-    "containerOverrides": [
+module "scheduled_task" {
+  source                                      = "cn-terraform/ecs-fargate-scheduled-task/aws"
+  count                                       = var.schedule_expression != null ? 1 : 0
+  ecs_cluster_arn                             = data.aws_ecs_cluster.main.arn
+  event_rule_schedule_expression              = var.schedule_expression
+  ecs_execution_task_role_arn                 = var.execution_role_arn
+  event_rule_name                             = "${var.name}-rule"
+  event_target_ecs_target_subnets             = [data.aws_subnet.selected.id]
+  event_target_ecs_target_security_groups     = data.aws_security_groups.selected.ids
+  event_target_ecs_target_task_definition_arn = aws_ecs_task_definition.task.arn
+  name_prefix                                 = var.name
+  event_target_input                          = jsonencode({
+    "containerOverrides" : [
       {
-        "command": var.schedule_command
+        "command" : var.schedule_command
       }
     ]
   })
