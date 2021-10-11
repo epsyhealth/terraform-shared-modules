@@ -3,7 +3,7 @@ locals {
 }
 
 resource "aws_ecr_repository" "ecr_repository" {
-  name     = lookup(local.repository_name, "name", null)
+  name = local.repository_name
 }
 
 resource "aws_ecr_repository_policy" "shared" {
