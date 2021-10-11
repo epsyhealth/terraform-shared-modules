@@ -48,7 +48,7 @@ data "aws_subnet" "selected" {
 
 data "aws_security_groups" "selected" {
   filter {
-    name   = "tag:Name"
+    name   = "group-name"
     values = ["default"]
   }
 }
