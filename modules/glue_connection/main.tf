@@ -25,7 +25,7 @@ resource "aws_glue_connection" "connection" {
 
   physical_connection_requirements {
     availability_zone      = var.physical_connection_requirements.availability_zone
-    security_group_id_list = data.aws_redshift_cluster.general.cluster_security_groups
+    security_group_id_list = data.aws_redshift_cluster.general.vpc_security_group_ids
     subnet_id              = tolist(data.aws_subnet_ids.redshift_subnets.ids)[0]
   }
 }
