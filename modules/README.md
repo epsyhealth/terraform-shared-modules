@@ -20,8 +20,8 @@ module "glue_iam" {
   
   name = local.name
   s3_buckets = [
-    "arn:aws:s3:::${local.name}",
-    "arn:aws:s3:::${local.name}/*"
+    local.name,
+    "${local.name}/*"
   ]
 }
 
