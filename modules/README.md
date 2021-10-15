@@ -39,6 +39,6 @@ module "glue_job" {
   temp_dir = "s3://my-s3-bucket-with-scripts/tmp"
   role_arn = module.glue_iam.role_arn
   connections = [local.name]
-    schedule = "*/15 * * * *"
+  schedule = "cron(0/15 * * * ? *)"
 }
 ```
