@@ -16,7 +16,7 @@ data "aws_subnet_ids" "redshift_subnets" {
 
 resource "aws_glue_connection" "connection" {
   connection_properties = {
-    JDBC_CONNECTION_URL = "jdbc:redshift://${data.aws_redshift_cluster.general.endpoint}/${var.connection_properties.database}"
+    JDBC_CONNECTION_URL = "jdbc:redshift://${data.aws_redshift_cluster.general.endpoint}:5439/${var.connection_properties.database}"
     PASSWORD            = data.aws_secretsmanager_secret_version.redshift_password.secret_string
     USERNAME            = var.connection_properties.username
   }
