@@ -46,3 +46,13 @@ variable "tags" {
   type    = map(any)
   default = null
 }
+
+variable "worker_type" {
+  type = string
+  default = "Standard"
+}
+
+variable "number_of_workers" {
+  type = number
+  default = 2
+}

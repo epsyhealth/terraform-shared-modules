@@ -13,6 +13,9 @@ resource "aws_glue_job" "glue_job" {
     "--TempDir"      = var.temp_dir
   }
 
+  worker_type = var.worker_type
+  number_of_workers = var.number_of_workers
+
   connections = var.connections
 
   tags = var.tags
