@@ -33,6 +33,11 @@ variable "temp_dir" {
   type = string
 }
 
+variable "bookmark_option" {
+  type = string
+  default = "job-bookmark-enable"
+}
+
 variable "connections" {
   type = list(any)
 }
