@@ -9,8 +9,9 @@ resource "aws_glue_job" "glue_job" {
   }
 
   default_arguments = {
-    "--job-language" = var.job_language
-    "--TempDir"      = var.temp_dir
+    "--job-language"        = var.job_language
+    "--TempDir"             = var.temp_dir
+    "--job-bookmark-option" = var.bookmark_option
   }
 
   worker_type = var.worker_type
