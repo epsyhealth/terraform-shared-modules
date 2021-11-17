@@ -24,7 +24,7 @@ resource "aws_glue_job" "glue_job" {
 
 resource "aws_glue_trigger" "glue_trigger" {
   count    = length(var.schedule) > 0 ? 1 : 0
-  name     = "${var.name}-schedule"
+  name     = "${var.project_name}-${var.name}-schedule"
   schedule = var.schedule
   type     = "SCHEDULED"
 
