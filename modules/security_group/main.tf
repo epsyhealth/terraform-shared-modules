@@ -15,6 +15,7 @@ module "security_group" {
   egress_rules                          = var.egress_rules
   egress_prefix_list_ids                = var.egress_prefix_list_ids
   ingress_with_cidr_blocks              = var.ingress_with_cidr_blocks
+  egress_with_cidr_blocks               = var.egress_with_cidr_blocks
   tags                                  = var.tags
   egress_with_source_security_group_id  = var.egress_with_source_security_group_id
   ingress_with_source_security_group_id = var.ingress_with_source_security_group_id

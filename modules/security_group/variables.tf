@@ -37,6 +37,11 @@ variable "ingress_with_cidr_blocks" {
   default = []
 }
 
+variable "egress_with_cidr_blocks" {
+  type    = list(any)
+  default = []
+}
+
 variable "tags" {
   type    = map(any)
   default = {}
