@@ -34,7 +34,7 @@ variable "temp_dir" {
 }
 
 variable "bookmark_option" {
-  type = string
+  type    = string
   default = "job-bookmark-enable"
 }
 
@@ -53,11 +53,11 @@ variable "tags" {
 }
 
 variable "worker_type" {
-  type = string
+  type    = string
   default = "Standard"
 }
 
 variable "number_of_workers" {
-  type = number
+  type    = number
   default = 2
 }

@@ -12,9 +12,10 @@ resource "aws_glue_job" "glue_job" {
     "--job-language"        = var.job_language
     "--TempDir"             = var.temp_dir
     "--job-bookmark-option" = var.bookmark_option
+    "--enable-metrics"      = ""
   }
 
-  worker_type = var.worker_type
+  worker_type       = var.worker_type
   number_of_workers = var.number_of_workers
 
   connections = var.connections
