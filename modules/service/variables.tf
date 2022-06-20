@@ -6,6 +6,11 @@ variable "name" {
   type = string
 }
 
+variable "enable_execute_command" {
+  type    = bool
+  default = false
+}
+
 variable "task_definition" {
   type = string
 }
