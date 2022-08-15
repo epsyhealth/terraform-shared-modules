@@ -3,6 +3,6 @@ variable "name" {
 }
 
 variable "stage" {
-  type    = "string"
+  type    = string
   default = "dev"
 }
