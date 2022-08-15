@@ -8,5 +8,15 @@ variable "stage" {
 }
 
 variable "key_policy_statements" {
-  type = list(map(any))
+  type = list(object({
+    effect     = string
+    principals = list(map(string))
+    action     = list(string)
+    resource   = list(string)
+    conditions = list(object({
+      test     = string
+      variable = string
+      values   = list(string)
+    }))
+  }))
 }
