@@ -27,7 +27,7 @@ data aws_iam_policy_document "policy" {
     content {
       sid       = statement.value.sid
       effect    = statement.value.effect
-      action    = statement.value.actions
+      actions    = statement.value.actions
       resources = statement.value.resources
 
       dynamic "principals" {
