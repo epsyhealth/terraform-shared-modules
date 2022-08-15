@@ -5,5 +5,5 @@ resource "aws_kms_key" "service_key" {
 
 resource "aws_kms_alias" "service_key_alias" {
   target_key_id = aws_kms_key.service_key.arn
-  name          = "alias/${var.name}-${terraform.workspace}"
+  name          = "alias/${var.name}-${var.stage}"
 }
