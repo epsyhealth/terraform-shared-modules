@@ -9,13 +9,14 @@ variable "stage" {
 
 variable "key_policy_statements" {
   type = list(object({
+    sid        = string
     effect     = string
     principals = list(object({
       type        = string
       identifiers = list(string)
     }))
-    action     = list(string)
-    resource   = list(string)
+    actions    = list(string)
+    resources  = list(string)
     conditions = list(object({
       test     = string
       variable = string

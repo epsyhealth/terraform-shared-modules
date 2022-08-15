@@ -25,25 +25,25 @@ data aws_iam_policy_document "policy" {
   dynamic "statement" {
     for_each = concat(local.default_statements, var.key_policy_statements)
     content {
-      sid       = statement.value["sid"]
-      effect    = statement.value["effect"]
-      actions   = statement.value["actions"]
-      resources = statement.value["resources"]
+      sid       = statement.value.sid
+      effect    = statement.value.effect
+      action    = statement.value.actions
+      resources = statement.value.resources
 
       dynamic "principals" {
         for_each = lookup(statement.value, "principals", [])
         content {
-          type        = principals.value["type"]
-          identifiers = principals.value["identifiers"]
+          type        = principals.value.type
+          identifiers = principals.value.identifiers
         }
       }
 
       dynamic "condition" {
         for_each = lookup(statement.value, "conditions", [])
         content {
-          test     = condition.value["test"]
-          variable = condition.value["variable"]
-          values   = condition.value["values"]
+          test     = condition.value.test
+          variable = condition.value.variable
+          values   = condition.value.values
         }
       }
     }
