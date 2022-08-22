@@ -35,7 +35,7 @@ data aws_iam_policy_document "policy" {
       resources = statement.value.resources
 
       dynamic "principals" {
-        for_each = lookup(statement.value, "principals", [])
+        for_each = coalesce(lookup(statement.value, "principals", []), [])
         content {
           type        = principals.value.type
           identifiers = principals.value.identifiers
@@ -43,7 +43,7 @@ data aws_iam_policy_document "policy" {
       }
 
       dynamic "condition" {
-        for_each = lookup(statement.value, "conditions", [])
+        for_each = coalesce(lookup(statement.value, "conditions", []), [])
         content {
           test     = condition.value.test
           variable = condition.value.variable
